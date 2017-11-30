@@ -1,0 +1,274 @@
+<div class="animated fadeIn">
+  <div class="row mb-12">
+
+    <div class="col-md-12" *ngIf="type=='employee'">
+      <input class="btn btn-primary text-right" routerLinkActive="active" [routerLink]="['/timesheet/dayviewmodel']" type="submit"
+        value="Add New ">
+    </div>
+    <div class="col-md-3" *ngIf="type=='employee'">
+    </div><br>
+    <div class="col-sm-3" *ngIf="type=='organization'">
+    </div><br>
+
+    <div class="row mb-3">
+      <div class="col-md-12 cards">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-search"></i></span>
+          <input type="text" name='inputsearch' class="form-control col-sm-12" placeholder="Search " #listFilter (keyup)="listFilter.value.length">
+        </div>
+      </div>
+    </div>&nbsp;&nbsp;
+    <!--<div class="form-group text-center"  *ngIf="type=='employee'" >  
+      <input type="text"  name='inputsearch'  class="form-control col-sm-12"  placeholder="Search by Task" #listFilter (keyup)="listFilter.value.length">    
+    </div>-->
+    <div class="col-sm-6">
+      <form class="form-horizontal " method="post" [formGroup]="myForm">
+        <div class="row mb-2">
+          <!--<label class="col-md-2 form-control-label" for="hf-InvoiceDueDate"><strong>Invoice Due Date</strong></label>-->
+          <div class="col-sm-4">
+            <my-date-picker name="Date" formControlName="Date" placeholder="Select Date" [options]="myDatePickerOptions" [(ngModel)]="Date"
+              required></my-date-picker>
+
+            <!--<my-date-picker   name="InvoiceDate"  formControlName="InvoiceDate" [options]="myDatePickerOptions"[(ngModel)]="InvoiceDate" required></my-date-picker>-->
+            <div *ngIf="myForm.controls['Date'].hasError('required') && myForm.controls['Date'].touched" class="error"></div>
+          </div>
+          <div class="col-sm-1">
+            <button type="button" class="btn btn-md btn-primary" [ladda]='isLoading' [disabled]="!myForm.valid" (click)="postdayviewsdata()"
+              (click)="isEdit">Go</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="!isEdit">
+    <form action="" class="form-horizontal " method="post">
+      <div class="form-group row">
+        <div class="col-md-12">
+          <div class="card cards">
+            <div class="card-header card-head text-center">
+              <h5> Day View Details</h5>
+
+            </div><br>
+
+            <table class="table table-striped" ng-reflect-input-data="[object Object],[object Object]">
+              <thead class="thead-default">
+                <tr>
+                  <th *ngIf="type=='organization'">Employee Name</th>
+                  <th>Client</th>
+                  <th>Project</th>
+                  <th>Task</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th *ngIf="type=='organization'">Duration</th>
+                  <th>Description</th>
+                  <th>Remarks</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <br>
+              <tbody *ngIf="type=='organization'">
+                <tr *ngFor="let dayview of modeldalist1|filter:listFilter.value ">
+                  <!--|filter:listFilter.value">-->
+                  <!---->
+                  <td *ngIf="type=='organization'">{{dayview.EmpName}} </td>
+                  <td>{{dayview.Client}} </td>
+                  <td>{{dayview.Project}} </td>
+                  <td>{{dayview.Task}} </td>
+                  <td>{{dayview.StartTime}} </td>
+                  <td>{{dayview.EndTime}} </td>
+                  <td *ngIf="type=='organization'">{{dayview.Hours}} </td>
+                  <a routerLinkActive="active" [routerLink]="['/timesheet/timesheetview',dayview.Id]">
+                    <td class="medium text-truncate">Click Here...</td>
+                  </a>
+                  <td>{{dayview.Remarks}} </td>
+                  <td>{{dayview.CreatedOn | date:'dd-MM-yyyy'}} </td>
+                </tr>
+              </tbody>
+
+              <!--<div class="col-sm-12 text-center" *ngIf="!( modeldalist1.length>0)">
+                <h6>No Records Found</h6>
+              </div>-->
+
+
+
+              <!--
+ <tr class="text-center">
+                        <div  *ngIf="!(modeldalist1.length>0)">
+                          <h6>No Records Found</h6>
+                        </div>
+                      </tr>-->
+
+
+              <tbody *ngIf="type=='employee'">
+                <tr *ngFor="let dayview of modeldalist2|searchfilter:listFilter.value  ">
+
+                  <td>{{dayview.Client}} </td>
+                  <td>{{dayview.Project}} </td>
+                  <td>{{dayview.Task}} </td>
+                  <td>{{dayview.StartTime}} </td>
+                  <td>{{dayview.EndTime }} </td>
+                  <!--<td *ngIf="type=='organization'">{{dayview.hours}} </td>-->
+                  <a routerLinkActive="active" [routerLink]="['/timesheet/timesheetview',dayview.Id]">
+                    <td class="medium text-truncate">Click Here...</td>
+                  </a>
+                  <td>{{dayview.Remarks}} </td>
+                  <td>{{dayview.CreatedOn | date:'dd-MM-yyyy'}} </td>
+                </tr>
+                <!--
+                      <div class="col-sm-12 text-center" *ngIf="!( modeldalist2.length>0)">
+                        <h6>No Records dsfsd Found</h6>
+                      </div>-->
+
+              </tbody>
+            </table>
+            <div class="row" *ngIf="type=='employee'">
+
+              <div class="col-sm-12 text-center" *ngIf="!( modeldalist2.length>0)">
+                <h6>No Records Found</h6>
+              </div>
+            </div>
+            <div class="row" *ngIf="type=='organization'">
+
+              <div class="col-sm-12 text-center" *ngIf="!( modeldalist1.length>0)">
+                <h6>No Records Found</h6>
+              </div>
+            </div>
+
+
+
+
+            <!--
+                  <div  class="col-sm-12 text-center" *ngIf="!((modeldalist1.length>0) || !(modeldalist2.length>0))">
+                          <h6>No Records Found</h6>
+                        </div>-->
+
+          </div>
+          <!--<div class="form-group row">
+                <div class="col-md-12 text-center">
+
+                  <button type="submit" class="btn btn-md btn-primary">Previous</button>
+                  (click)="postDayview()"
+                  <button type="button" class="btn btn-md btn-primary"> Next </button>
+                  routerLinkActive="active" [routerLink]="['/personal/dayview']"
+                </div>
+              </div>-->
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+
+
+
+
+
+
+
+
+  <div class="col-md-12" *ngIf="isEdit">
+    <form action="" class="form-horizontal " method="post">
+      <div class="form-group row">
+        <div class="col-md-12">
+          <div class="card cards">
+            <div class="card-header card-head text-center">
+              <h5> Day View Details</h5>
+            </div><br>
+            <table class="table table-striped" ng-reflect-input-data="[object Object],[object Object]">
+              <thead class="thead-default">
+                <tr>
+                  <th *ngIf="type=='organization'">Employee Name</th>
+                  <th>Client</th>
+                  <th>Project</th>
+                  <th>Task</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th *ngIf="type=='organization'">Duration</th>
+                  <th>Description</th>
+                  <th>Remarks</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <br>
+              <tbody *ngIf="type=='organization'">
+
+                <tr *ngFor="let dayview of arraytest|filter:listFilter.value">
+                  <!--|filter:listFilter.value">-->
+                  <!---->
+                  <td *ngIf="type=='organization'">{{dayview.EmpName}} </td>
+                  <td>{{dayview.Client}} </td>
+                  <td>{{dayview.Project}} </td>
+                  <td>{{dayview.Task}} </td>
+                  <td>{{dayview.StartTime}} </td>
+                  <td>{{dayview.EndTime}} </td>
+                  <td *ngIf="type=='organization'">{{dayview.Hours}} </td>
+                  <a routerLinkActive="active" [routerLink]="['/timesheet/timesheetview',dayview.Id]">
+                    <td class="medium text-truncate">Click here...</td>
+                  </a>
+                  <td>{{dayview.Remarks}} </td>
+                  <td>{{dayview.CreatedOn | date:'dd-MM-yyyy'}} </td>
+
+                </tr>
+
+              </tbody>
+              <tbody *ngIf="type=='employee'">
+
+                <tr *ngFor="let dayview of arraytest|searchfilter:listFilter.value">
+                  <!--|filter:listFilter.value">-->
+                  <!---->
+
+                  <td>{{dayview.Client}} </td>
+                  <td>{{dayview.Project}} </td>
+                  <td>{{dayview.Task}} </td>
+                  <td>{{dayview.StartTime}} </td>
+                  <td>{{dayview.EndTime}} </td>
+
+                  <a routerLinkActive="active" [routerLink]="['/timesheet/timesheetview',dayview.Id]">
+                    <td class="medium text-truncate">Click here...</td>
+                  </a>
+                  <td>{{dayview.Remarks}} </td>
+                  <td>{{dayview.CreatedOn | date:'dd-MM-yyyy'}} </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+            <div class="col-sm-12 text-center" *ngIf="!(arraytest.length>0)">
+              <h6>No Records Found</h6>
+            </div>
+
+          </div>
+          <!--<div class="form-group row">
+                <div class="col-md-12 text-center">
+                  <button type="submit" class="btn btn-md btn-primary">Previous</button>
+                  (click)="postDayview()"
+                  <button type="button" class="btn btn-md btn-primary"> Next </button>
+                  routerLinkActive="active" [routerLink]="['/personal/dayview']"
+                </div>
+              </div>-->
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

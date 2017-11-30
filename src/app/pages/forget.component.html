@@ -1,0 +1,35 @@
+<div class="app flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="text-center">
+                    <img class="col-md-10" src="{{imagesrc}}" alt=""><br><br>
+                </div>
+                <form class="form-horizontal" [formGroup]="forgotForm">
+                    <div class="card-group mb-0">
+                        <div class="card cards">
+                            <h3 class="card-header card-head text-center">
+                                Forgot Password
+                            </h3>
+                            <h6 class="alert alert-danger" *ngIf="error">{{error}}</h6>
+                            <h6 class="alert alert-warning" *ngIf="success">{{success}}</h6>
+                            <div class="card-block">
+                                <div class="input-group mb-1">
+                                    <input type="text" formControlName="email" class="form-control" placeholder="Email" [value]="model.Email" (input)="model.Email = $event.target.value"
+                                        pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                                </div>
+                                <div *ngIf="forgotForm.controls['email'].hasError('required') && forgotForm.controls['email'].touched" class="error">You must include a email.</div>
+                                <div *ngIf="forgotForm.controls['email'].hasError('pattern') && forgotForm.controls['email'].touched" class="error">Email is invalid </div>
+
+                                <button type="submit" class="btn btn-block btn-primary" [ladda]='isLoading' [disabled]="!forgotForm.valid" (click)="forgetPwd()">Submit</button>                                Already have an account ? <button type="button" class="btn btn-link px-0" [routerLink]="['/pages/login']">Login</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>

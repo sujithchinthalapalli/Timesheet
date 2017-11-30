@@ -1,0 +1,74 @@
+<div class="app">
+  <div class="row-center">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-5">
+          <div class="text-center">
+            <img class="col-md-10" src="{{imagesrc}}" alt=""><br><br>
+          </div>
+          <div class="card cards mx-2">
+            <div class="card-block p-2">
+              <h3 class="card-header card-head text-center">
+                Register
+              </h3>
+              <br>
+              <form class="form-horozontal" [formGroup]="myForm">
+                <h6 class="alert alert-danger" *ngIf="error">{{error}}</h6>
+                <div class="input-group mb-1" *ngIf="isemployee">
+                  <input type="text" *ngIf="isemployee" class="form-control" [readonly]="true" placeholder="Name" [value]="modele.FirstName"
+                    (input)="modele.FirstName = $event.target.value">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" *ngIf="isorg" class="form-control" formControlName="firstname" class="form-control btn-md" placeholder="FirstName"
+                    [value]="model.FirstName" (input)="model.FirstName = $event.target.value">
+
+
+                  <div *ngIf="myForm.controls['firstname'].hasError('required') && myForm.controls['firstname'].touched" class="error">You must include a firstname.</div>
+                </div>
+                <div class="form-group">
+                  <input type="text" *ngIf="isorg" class="form-control" formControlName="lastname" class="form-control btn-md" placeholder="LastName"
+                    [value]="model.LastName" (input)="model.LastName = $event.target.value">
+                  <input type="text" *ngIf="isemployee" class="form-control" formControlName="lastname" class="form-control btn-md" placeholder="LastName"
+                    [value]="model.LastName" (input)="modele.LastName = $event.target.value">
+
+                  <div *ngIf="myForm.controls['lastname'].hasError('required') && myForm.controls['lastname'].touched" class="error">You must include a lastname.</div>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" *ngIf="isorg" type="text" formControlName="email" class="form-control btn-md" placeholder="BusinessEmail"
+                    [value]="model.Email" (input)="model.Email = $event.target.value" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+
+                  <input type="text" *ngIf="isemployee" formControlName="email" class="form-control" [readonly]="true" placeholder="EmployeeEmail"
+                    [value]="modele.Email" (input)="modele.Email = $event.target.value" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                  <div *ngIf="myForm.controls['email'].hasError('required') && myForm.controls['email'].touched" class="error">You must include a email.</div>
+                  <div *ngIf="myForm.controls['email'].hasError('pattern') && myForm.controls['email'].touched" class="error"> Enter Valid Email.</div>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" *ngIf="isorg" type="password" formControlName="password" class="form-control btn-md" placeholder="Password"
+                    [value]="model.Password" (input)="model.Password = $event.target.value" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$"
+                    minlength="6" maxlength="12" required>
+                  <input class="form-control" *ngIf="isemployee" type="password" formControlName="password" class="form-control btn-md" placeholder="Password"
+                    [value]="modele.Password" (input)="modele.Password = $event.target.value" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$"
+                    minlength="6" maxlength="12" required>
+
+                  <div *ngIf="myForm.controls['password'].hasError('required') && myForm.controls['password'].touched" class="error">You must include a Password.</div>
+                  <div *ngIf="myForm.controls['password'].hasError('pattern') && myForm.controls['password'].touched" class="error">
+                    Password should be min 6 characters and one number and one Uppercase and one special character
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" formControlName="repeatpassword" class="form-control" placeholder="Repeat password">
+                  <div *ngIf="myForm.controls['repeatpassword'].hasError('required') && myForm.controls['repeatpassword'].touched" class="error">Please enter correct password</div>
+                </div>
+              </form>
+              <button *ngIf="isorg" type="submit" class="btn btn-primary btn-md btn-block" [disabled]="!myForm.valid" (click)="register()">Create Account</button>
+              <button *ngIf="isemployee" type="submit" class="btn btn-primary btn-md btn-block" [disabled]="!myForm.valid" (click)="registeremp()">Register Employee</button>
+              <label class="px-0" [routerLink]="['/pages/login']">Already have an account?<a [routerLink]="">SignIn</a>
+                </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

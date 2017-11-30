@@ -1,0 +1,55 @@
+<div class="animated fadeIn">
+  <div class="col-md-12">
+    <form action="" class="form-horizontal " method="post">
+      <div class="form-group row">
+        <div class="col-md-12">
+          <div class="card cards ">
+            <div class="card-header card-head text-center">
+              <div class="row mb-12">
+                <div class="col-md-3"></div>
+                <h5 class="col-md-6"> Employees Details</h5>
+              </div>
+            </div><br>
+            <div class="row mb-12">
+              <div class="col-md-3"></div>
+              <h5 class="col-md-5"> </h5>
+              <div class="col-md-3 cards text-center">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                  <input type="text" name='inputsearch' class="form-control col-sm-12" placeholder="Search Employee" #listFilter (keyup)="listFilter.value.length">
+                </div>
+              </div>
+            </div>
+            <br>
+            <table class="table table-striped" ng-reflect-input-data="[object Object],[object Object]">
+              <thead class="thead-default">
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <br>
+              <tbody>
+                <tr *ngFor="let emp of modelemlist2 |filter:listFilter.value  | orderBy: order:ascending">
+                  <td></td>
+                  <td><a routerLinkActive="active" [routerLink]="['/employees/employeeview',emp.Id]">{{emp.FirstName}}</a></td>
+                  <!--<td >{{emp.FirstName}}</td>-->
+                  <td>{{emp.Email}}</td>
+                  <!--<td *ngIf="emp.Active==false"> <button disabled="disabled" class="btn btn-warning btn-sm">In Active</button></td>-->
+                  <td *ngIf="emp.Active==true"> <button class="btn btn-success btn-sm">Active</button></td>
+                </tr>
+
+              </tbody>
+            </table>
+            <div class="col-sm-12 text-center" *ngIf="!(modelemlist2.length>0)">
+              <h6>No Records Found</h6>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>

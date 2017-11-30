@@ -1,0 +1,65 @@
+<form #f="ngForm" (ngSubmit)="onSubmit()">
+
+  <div class="item-header-wrap">
+    <div class="item-header hidden-xs">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-sm-3 col-xs-8">
+            <p>Description</p>
+          </div>
+          <div class="col-sm-1 col-xs-6">
+            <p>Unit Price</p>
+          </div>
+          <div class="col-sm-1 col-xs-6">
+            <p>Quantity</p>
+          </div>
+          <div class="col-sm-1 col-xs-12">
+            <p>Line Total</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="item-wrap">
+
+    <div class="item" *ngFor="let product of invoice.products;let i=index">
+      <div class="container-fluid">
+
+        <div class="row">
+
+
+          <div class="col-sm-3 col-xs-8">
+            <div class="orange col">
+
+              <input type="text" [(ngModel)]="product.desc" name="product.desc" value="" />
+            </div>
+          </div>
+
+
+          <div class="col-sm-1 col-xs-6">
+            <div class="red col">
+              <input type="text" name="name-{{i}}" [(ngModel)]="product.unit_price">
+            </div>
+          </div>
+          <div class="col-sm-1 col-xs-6">
+            <div class="col">
+              <input type="text" [(ngModel)]="product.quantity" name="name-{{i}}" />
+            </div>
+          </div>
+          <div class="col-sm-1 col-xs-12">
+            <div class="red col">
+              <p>${{product.unit_price * product.quantity}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="total">
+    Total = {{getTotal()}}
+  </div>
+
+
+
+  <!--<pre>{{Form| json}}</pre>-->

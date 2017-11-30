@@ -1,0 +1,265 @@
+<div class="animated fadeIn">
+  <div class="row justify-content-md-center">
+    <div class="col-md-12">
+      <div class="card cards">
+
+        <form action="" class="form-horizontal " method="post" [formGroup]="myForm">
+
+          <div class="form-group row">
+            <div class="col-md-12">
+              <div class="card-block">
+
+                <button class="btn btn-primary btn-sm" type="button" (click)="postInvoiceEmail()">SEND BY EMAIL</button>
+                <button class="btn btn-primary btn-sm" type="button" (click)="print()">PRINT INVOICE</button>
+                <!--<button class="btn btn-primary btn-sm" type="button"  data-toggle="modal" (click)="largeModal.show()">REGISTER PAYMENT</button> 
+                          <button class="btn btn-outline-secondary btn-sm" type="button" data-toggle="modal" (click)="largeModal1.show()">INVOICE REFUND</button> -->
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">&nbsp;&nbsp;
+            <label class="col-md-3 form-control-label" for="hf-InvoiceId"><strong>Invoice ID</strong></label>
+            <div class="col-md-2">
+              <label> {{modelr.InvoiceId}}</label>
+              <!--<input class="form-control"  formControlName="InvoiceID" *ngIf="isEdit" id="hf-InvoiceId" name="hf-InvoiceId" placeholder=" " type="text"  [value]="modelr.InvoiceId" (input)="modelr.InvoiceId = $event.target.value">
+                      <div *ngIf="myForm.controls['InvoiceID'].hasError('required') && myForm.controls['InvoiceID'].touched" class="error">You must include a Invoice ID</div>
+                  -->
+            </div>
+            <label class="col-md-2 form-control-label" for="hf-InvoiceDate"><strong>Invoice Date</strong></label>
+            <div class="col-md-2">
+              <label *ngIf="!isEdit" for="hf-InvoiceDate">{{modelr.InvoiceDate|date:'dd-MM-yyyy'}} </label>
+              <div *ngIf="isEdit">
+                <my-date-picker name="startDate" formControlName="InvoiceDate" [options]="myDatePickerOptions" [(ngModel)]="startDate" required>{{modelr.invoicedate|date:'yyyy/MM/dd'}}</my-date-picker>
+                <!--<my-date-picker name="startDate" formControlName="InvoiceDate" [options]="myDatePickerOptions" [(ngModel)]="startDate" required></my-date-picker>-->
+                <div *ngIf="myForm.controls['InvoiceDate'].hasError('required') && myForm.controls['InvoiceDate'].touched" class="error">You must include a Invoice Date</div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- <div class="form-group row">
+                               <label class="col-md-2 form-control-label" for="hf-InvoiceDate"><strong>Invoice Date</strong></label>
+                  <div class="col-md-2">
+                    <my-date-picker name="startDate" formControlName="InvoiceDate" [options]="myDatePickerOptions" [(ngModel)]="startDate"
+                      required></my-date-picker>
+                    <div *ngIf="myForm.controls['InvoiceDate'].hasError('required') && myForm.controls['InvoiceDate'].touched" class="error">You must include a Invoice Date</div>
+                  </div>
+                  <label class="col-md-2 form-control-label" for="hf-InvoiceDueDate"><strong>Invoice Due Date</strong></label>
+                  <div class="col-md-2">
+                    <my-date-picker name="endDate" formControlName="InvoiceDueDate" [options]="myDatePickerOptions1" [(ngModel)]="endDate"
+                      required></my-date-picker>
+                    <div *ngIf="myForm.controls['InvoiceDueDate'].hasError('required') && myForm.controls['InvoiceDueDate'].touched" class="error">You must include a InvoiceDueDate</div>
+                  </div>
+                </div>-->
+
+          <div class="form-group row">&nbsp;&nbsp;
+            <label class="col-md-3 form-control-label" for="hf-OrganizationName"><strong>Organization Name</strong></label>
+            <div class="col-md-2">
+              <label *ngIf="!isEdit" for="hf-OrganizationName"> {{modelr.OrgName}}</label>
+              <label *ngIf="isEdit" for="hf-OrganizationName"> {{modelr.OrgName}}</label>
+              <!--<input class="form-control" *ngIf="isEdit"  id="hf-OrganizationName" placeholder=" " type="text" [value]="modelr.OrgName" (input)="modelr.OrgName = $event.target.value">-->
+            </div>
+            <label class="col-md-2 form-control-label" for="hf-Invoice Due Date"><strong>Invoice Due Date</strong></label>
+            <div class="col-md-2">
+              <label *ngIf="!isEdit" for="hf-InvoiceDueDate">{{modelr.InvoiceDueDate | date:'dd-MM-yyyy'}}</label>
+              <div *ngIf="isEdit">
+                <my-date-picker name="endDate" formControlName="InvoiceDueDate" [options]="myDatePickerOptions1" [(ngModel)]="endDate" required>{{modelr.InvoiceDueDate|date:'yyyy/MM/dd'}}</my-date-picker>
+
+                <div *ngIf="myForm.controls['InvoiceDueDate'].hasError('required') && myForm.controls['InvoiceDueDate'].touched" class="error">You must include a Invoice Due Date </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="col-md-12 mb-4">
+            <tabset class="tab-container">
+              <div class="tab-content">
+                <tab heading="INVOICE LINES" class="tab-pane active" [disabled]="Main">
+
+                  <div class="col-md-12">
+                    <table class="table table-striped" ng-reflect-rows-on-page="10" ng-reflect-input-data="[object Object],[object Object">
+                      <thead class="thead-default">
+                        <tr>
+                          <th>Candidate</th>
+                          <th>Description</th>
+                          <th>Account</th>
+                          <th>Hours</th>
+                          <th>HourlyRate</th>
+                          <th>Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let invoice of modelrplist">
+                          <td>{{invoice.CandidateName}} </td>
+                          <td>{{invoice.Description}} </td>
+                          <td>{{invoice.Account}} </td>
+                          <td> {{invoice.Hours}}</td>
+                          <td> {{invoice.HourlyRate}}</td>
+                          <td> {{invoice.Amount}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!--<div class="row" *ngFor="let invoice of modelrplist">
+        <div class="col-md-11 text-right">Untaxed Amount :{{invoice.Amount}}</div>
+        <div class="col-md-1 text-right ng-binding"> </div>
+      </div>-->
+
+                  <!--<div class="col-md-11 text-right">Total :{{getTotal()}}</div>-->
+
+                  <!--<div class="row" *ngFor="let invoice of modelrplist">-->
+                  <hr>
+                  <div class="col-md-11 text-right">Total :{{modelr.Total}}</div>
+                  <!--<p>{{model.Current_Job_Status}}</p>-->
+                  <!--<div class="col-md-1 text-right ng-binding"> </div>-->
+                  <!--</div>-->
+                  <hr>
+                  <!--<div class="row" *ngFor="let invoice of modelrplist">
+        <div class="col-md-11 text-right">Amount Due :{{invoice.amount}}</div>
+        <div class="col-md-1 text-right ng-binding"> </div>
+      </div>
+                   -->
+                  <div class="form-group row">
+                    <div class="col-md-12 text-center">
+                      <button type="button" *ngIf="!isEdit" class="btn btn-md btn-primary" (click)="isEdit=true">Edit</button>
+                      <button type="button" *ngIf="!isEdit" class="btn btn-md btn-primary" routerLinkActive="active" [routerLink]="['/Invoice']">Back</button>
+                      <button type="submit" *ngIf="isEdit" class="btn btn-md btn-primary" [ladda]='isLoading' [disabled]="!myForm.valid" (click)="updateInvoice()">Save</button>
+                      <button type="button" *ngIf="isEdit" class="btn btn-md btn-primary" (click)="isEdit=false">Cancel</button>
+                    </div>
+                  </div>
+
+                </tab>
+                <!--<tab heading="OTHER INFO" class="tab-pane" [disabled]="Main1">
+             
+        </tab>
+        -->
+
+              </div>
+            </tabset>
+          </div>
+
+
+        </form>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  *ngIf="type=='organization'">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Register Payment</h5>
+        <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+      <div class="animated fadeIn">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+
+              <div class="card-block">
+                <form action="" class="form-horizontal " method="post">
+
+                  <div class="form-group row">
+                    <div class="col-md-12">
+
+                      <div class="form-group row">
+                        <label class="col-md-2 form-control-label" for="hf-InvoiceNO"><strong>Invoice NO</strong></label>
+                        <div class="col-md-3">
+                          <input class="form-control" id="hf-InvoiceNO" placeholder=" " type="text">
+                        </div>
+                        <label class="col-md-2 form-control-label" for="hf-PaymentDate"><strong>Payment Date</strong></label>
+                        <div class="col-md-3">
+                          <fieldset class="form-group ">
+                            <div class="input-group">
+                              <input class="form-control" [textMask]="{mask: dateMask}" placeholder="" type="text" pattern="^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$">
+                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                          </fieldset>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <label class="col-md-2 form-control-label" for="hf-PaymentAmount"><strong>PaymentAmount</strong></label>
+                        <div class="col-md-3">
+                          <input class="form-control" id="hf-PaymentAmount" placeholder=" " type="text">
+                        </div>
+                      </div>
+                      <button class="btn btn-sm btn-primary" type="submit">SEND</button>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div bsModal #largeModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Refund Invoice</h5>
+        <button type="button" class="close" (click)="largeModal1.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+      <div class="animated fadeIn">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+
+              <div class="card-block">
+                <form action="" class="form-horizontal " method="post">
+
+                  <div class="form-group row">
+                    <div class="col-md-12">
+
+                      <div class="form-group row">
+                        <label class="col-md-2 form-control-label" for="hf-RefundDate"><strong>Refund Date</strong></label>
+                        <div class="col-md-4">
+                          <fieldset class="form-group ">
+                            <div class="input-group">
+                              <input class="form-control" [textMask]="{mask: dateMask}" pattern="^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$"
+                                placeholder="" type="text">
+                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                          </fieldset>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <label class="col-md-2 form-control-label" for="hf-Reason"><strong>Reason</strong></label>
+                        <div class="col-md-4">
+                          <input class="form-control" id="hf-Reason" placeholder=" " type="text">
+                        </div>
+                      </div>
+                      <button class="btn btn-sm btn-primary" type="submit">SEND</button>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

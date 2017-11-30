@@ -1,0 +1,72 @@
+<div class="animated fadeIn"><br>
+    <div class="row justify-content-md-center">
+        <div class="col-md-10">
+            <div class="card cards">
+                <h5 class="card-header card-head text-primary text-center"><strong>{{ viewDate |date}}</strong></h5>
+                <div class="card-block">
+                    <form action="" method="post" class="form-horizontal" [formGroup]="myForm">
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label" for="hf-client"><strong>Client</strong></label>
+                            <div class="col-md-4">
+                                <input class="form-control" id="hf-client" formControlName="client" name="hf-client" placeholder="Enter Client Name " type="text"
+                                    (input)="modelda.Client = $event.target.value">
+                                <div *ngIf="myForm.controls['client'].hasError('required') && myForm.controls['client'].touched" class="error">You must include a Client Name.</div>
+                            </div>
+                            <label class="col-md-2 form-control-label"><b>Project</b></label>
+                            <div class="col-md-4">
+                                <input class="form-control" id="hf-project" formControlName="project" name="hf-project" placeholder="Enter Project Name "
+                                    type="text" (input)="modelda.Project = $event.target.value">
+                                <div *ngIf="myForm.controls['project'].hasError('required') && myForm.controls['project'].touched" class="error">You must include a Project Name.</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label" for="hf-task"><strong>Task</strong></label>
+                            <div class="col-md-4">
+                                <input class="form-control" id="hf-task" formControlName="task" name="hf-task" placeholder="Enter Task Name " type="text"
+                                    (input)="modelda.Task = $event.target.value">
+                                <div *ngIf="myForm.controls['task'].hasError('required') && myForm.controls['task'].touched" class="error">You must include a Task Name.</div>
+                            </div>
+                            <label class="col-md-2 form-control-label" for="hf-start"><strong>StartTime</strong></label>
+                            <div class="col-md-4">
+                                <input class="form-control" id="hf-start" formControlName="start" name="hf-start" placeholder="Enter Start Time " type="datetime-local"
+                                    (change)="calc()" (input)="modelda.StartTime = $event.target.value">
+                                <div *ngIf="myForm.controls['start'].hasError('required') && myForm.controls['start'].touched" class="error">You must include a StartTime.</div>
+                                <!--<div *ngIf="myForm.controls['start'].hasError('pattern') && myForm.controls['start'].touched" class="error">State time value is invalid </div>-->
+                                <!--<small class="text-muted">ex.Time format 00:00 To 24:00</small>-->
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label" for="hf-end"><strong>EndTime</strong></label>
+                            <div class="col-md-4">
+                                <input class="form-control" id="hf-end" formControlName="end" name="hf-end" placeholder="Enter End Time " type="datetime-local"
+                                    (change)="calc()" (input)="modelda.EndTime = $event.target.value">
+                                <div *ngIf="myForm.controls['end'].hasError('required') && myForm.controls['end'].touched" class="error">You must include a EndTime.</div>
+                                <!--<div *ngIf="myForm.controls['end'].hasError('pattern') && myForm.controls['end'].touched" class="error">end Time is invalid </div>-->
+                                <!--<small class="text-muted">ex.Time format 00:00 To 24:00</small>-->
+                            </div>
+                            <label class="col-md-2 form-control-label" for="hf-notes"><strong>Description*</strong></label>
+                            <div class="col-md-4">
+                                <textarea class="form-control" id="hf-notes" formControlName="notes" name="hf-notes" placeholder="Enter Description " type="text"
+                                    (input)="modelda.Notes = $event.target.value"></textarea>
+                                <div *ngIf="myForm.controls['notes'].hasError('required') && myForm.controls['notes'].touched" class="error">You must include a Description.</div>
+                            </div>
+                        </div>
+                        <!--<div class="form-group row">
+                            <label class="col-md-2 form-control-label" for="hf-hours"><strong>duration</strong></label>
+                            <div class="col-md-4">
+                                <input class="form-control" id="hf-hours" name="hf-hours" type="text" [value]="formatTime(modelda.hours)" (input)="modelda.hours = $event.target.value">
+                                <small class="text-muted">ex.Time format 00:00 To 24:00</small>
+                            </div>
+                        </div>-->
+                    </form>
+                    <div class="form-group row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn btn-md btn-primary" [disabled]="!myForm.valid" [ladda]='isLoading' (click)="postDayview()">Save</button>
+                            <button type="button" class="btn btn-md btn-primary" routerLinkActive="active" [routerLink]="['/timesheet/dayview']"> Cancel </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

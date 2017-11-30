@@ -1,0 +1,56 @@
+<div class="app">
+  <div class="row-center">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="card-group mb-0">
+            <div class="text-center">
+              <img class="col-md-10" src="{{imagesrc}}" alt=""><br><br>
+            </div>
+            <div class="card cards">
+              <h3 class="card-header card-head text-center">
+                Login
+              </h3>
+              <form class="form-horizontal" [formGroup]="myForm_">
+                <div class="card-block">
+
+                  <h6 class="alert alert-danger" *ngIf="error">{{error}}</h6>
+
+
+
+                  <div class="form-group">
+
+                    <input type="email" formControlName="email" class="form-control" placeholder="Email Address" (input)="model.Email = $event.target.value"
+                      pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                    <div *ngIf="myForm_.controls['email'].hasError('required') && myForm_.controls['email'].touched" class="error">You must include a email.</div>
+                    <div *ngIf="myForm_.controls['email'].hasError('pattern') && myForm_.controls['email'].touched" class="error">Email is invalid </div>
+                  </div>
+                  <div class="form-group">
+
+                    <input type="password" formControlName="password" class="form-control" placeholder="Password" (input)="model.Password = $event.target.value">
+                    <div *ngIf="myForm_.controls['password'].hasError('required') && myForm_.controls['password'].touched" class="error">You must provide password.</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <button type="submit" class="btn btn-block btn-primary" data-style="expand-left" [ladda]='isLoading' [disabled]="!myForm_.valid"
+                        (click)="login()">Login</button>
+                      <!--<button type="submit" class="btn btn-block btn-primary" *ngIf="type=='employee'" data-style="expand-left"  [disabled]="!myForm_.valid" (click)="loginemp()" >Login</button>-->
+                    </div>
+                    <!--<div class="col-md-6">
+                  <button type="button" class="btn btn-block btn-primary" data-style="expand-left" [ladda]='isOktaLoading' [hidden]="true" [disabled]="!myForm_.valid" (click)="oktalogin()" >Okta Login</button>
+                </div>-->
+                  </div>
+                  <button type="submit" class="btn btn-link px-0" [routerLink]="['/pages/forget']">Forgot password?</button>
+                  <!--<button type="button" class="btn btn-md btn-linkedin col-md-12" data-style="expand-left"  (click)="signIn('linkedin')" >LinkedIn</button>-->
+                  <label class="px-0" [routerLink]="['/pages/register']">Don't you have an account?<a [routerLink]="">SignUP</a></label>
+                </div>
+              </form>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

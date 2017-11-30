@@ -1,0 +1,101 @@
+<header class="app-header navbar">
+  <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">&#9776;</button>
+  <a class="navbar-brand" href="#"></a>
+
+  <ul class="nav navbar-nav hidden-md-down">
+    <li class="nav-item">
+      <a class="nav-link navbar-toggler sidebar-toggler" href="#">&#9776;</a>
+    </li>
+
+  </ul>
+  <ul class="nav navbar-nav ml-auto">
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+        <!--<img src="assets/img/avatars/8.jpg" class="img-avatar" alt={{currentUser.Email}}>-->
+        <img src="{{imagesrc}}" class="img-avatar">
+        <img src="{{imagesrc1}}" class="img-avatar">
+        <!--<span class="hidden-md-down">{{currentUser.FirstName}}</span>-->
+        <span class="hidden-md-down" *ngIf="!givenName">{{currentUser.FirstName}}</span>
+        <span class="hidden-md-down" *ngIf="givenName">{{givenName}}</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-header text-center"><strong>Account</strong></div>
+        <a *ngIf="type=='employee'" class="dropdown-item" routerLinkActive="active" [routerLink]="['/settings/myprofile']">My Profile</a>
+        <a *ngIf="type=='organization'" class="dropdown-item" routerLinkActive="active" [routerLink]="['/settings/companyprofile']">Company Profile</a>
+        <a class="dropdown-item" [routerLink]="['/pages/login']">Logout</a>
+      </div>
+    </li>
+    <!--<li class="nav-item hidden-md-down">
+      <a class="nav-link navbar-toggler aside-menu-toggler" href="#">&#9776;</a>
+    </li>-->
+  </ul>
+
+</header>
+
+
+<div class="app-body">
+  <div class="sidebar">
+    <nav class="sidebar-nav">
+      <ul class="nav">
+        <li class="nav-item" *ngIf="type=='organization'">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']"><i class="icon-speedometer"></i> Dashboard</a>
+        </li>
+        <!--<li class="nav-item nav-dropdown" routerLinkActive="active">
+          <a class="nav-link nav-dropdown-toggle" [routerLink]="['/dashboard']"><i class="fa fa-child fa-2x" aria-hidden="true"></i>personal</a>
+          <ul class="nav-dropdown">-->
+
+
+        <li class="divider"></li>
+        <li class="nav-title" *ngIf="type=='organization'">
+          EMPLOYEE INFO
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/timesheet/dayview']"><i class="icon-note icons  "></i>Day view</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/timesheet/weekview']"><i class="icon-book-open icons "></i>Week View</a>
+        </li>
+        <!--<li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/personal/timesheetview']">TimeSheet View</a>
+            </li>-->
+        <li class="nav-item" *ngIf="type=='organization'">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/employees']"><i class="fa fa-users fa-lg mt-4"></i>Employees</a>
+        </li>
+
+        <li class="divider"></li>
+        <li class="nav-title" *ngIf="type=='organization'">
+          ACCOUNT PAYMENTS
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/Invoice']" *ngIf="type=='organization'"><i class="fa fa-dollar fa-lg mt-4"></i>Invoice</a>
+        </li>
+        <!--<li class="nav-item"  *ngIf="type=='organization'"  >
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/personal/reports']">Reports</a>
+            </li>-->
+
+
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Main content -->
+  <main class="main">
+    <ol class="breadcrumb">
+      <breadcrumbs></breadcrumbs>
+
+
+
+    </ol>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- /.conainer-fluid -->
+  </main>
+</div>
+
+<footer class="app-footer">
+  <a href="http://rbtimesheets.azurewebsites.net">Time Sheets</a> &copy; 2017 TimeSheets.
+  <span class="float-right">Powered by <a href="http://rbtimesheets.azurewebsites.net">Time Sheets</a>
+    </span>
+</footer>

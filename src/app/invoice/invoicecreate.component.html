@@ -1,0 +1,243 @@
+<div class="animated fadeIn">
+  <div class="row justify-content-md-center">
+    <div class="col-md-12">
+      <div class="card cards">
+        <h3 class="card-header card-head text-center">Invoice</h3>
+        <form action="" class="form-horizontal " method="post" [formGroup]="myForm">
+
+          <div class="form-group row">
+            <div class="col-md-12">
+              <br>
+              <div class="form-group row">&nbsp;&nbsp;
+                <!--<label class="col-md-2 form-control-label" for="hf-InvoiceId"><strong>Invoice ID</strong></label>
+                  <div class="col-md-2">
+                    <input class="form-control" id="hf-InvoiceId" formControlName="InvoiceID" name="hf-InvoiceId" placeholder="Enter InvoiceId"
+                      type="text" (input)="model.InvoiceId = $event.target.value">
+                    <div *ngIf="myForm.controls['InvoiceID'].hasError('required') && myForm.controls['InvoiceID'].touched" class="error">You must include a Invoice ID</div>
+                  </div>-->
+
+                <label class="col-md-2 form-control-label" for="hf-OrganizationName"><strong>Organization Name</strong></label>
+                <div class="col-md-2">
+                  <input class="form-control" [readonly]="true" id="hf-OrganizarionName" name="hf-OrganizarionName" [value]="name" (input)="model.OrgName = $event.target.value">
+                </div>
+
+              </div>
+
+              <div class="form-group row">&nbsp;&nbsp;
+                <label class="col-md-2 form-control-label" for="hf-InvoiceDate"><strong>Invoice Date</strong></label>
+                <div class="col-md-2">
+                  <my-date-picker name="startDate" placeholder="Start Date" formControlName="InvoiceDate" [options]="myDatePickerOptions" [(ngModel)]="startDate"
+                    required></my-date-picker>
+                  <div *ngIf="myForm.controls['InvoiceDate'].hasError('required') && myForm.controls['InvoiceDate'].touched" class="error">You must include a Invoice Date</div>
+                </div>
+                <label class="col-md-2 form-control-label" for="hf-InvoiceDueDate"><strong>Invoice Due Date</strong></label>
+                <div class="col-md-2">
+                  <my-date-picker name="endDate" placeholder="End Date" formControlName="InvoiceDueDate" [options]="myDatePickerOptions1" [(ngModel)]="endDate"
+                    required></my-date-picker>
+                  <div *ngIf="myForm.controls['InvoiceDueDate'].hasError('required') && myForm.controls['InvoiceDueDate'].touched" class="error">You must include a InvoiceDueDate</div>
+                </div>
+              </div>
+              <div class="col-md-11 mb-4">
+                <tabset class="tab-container ">
+                  <div class="tab-content">
+                    <tab heading="INVOICE LINES" class="tab-pane active">
+                      <div class="col-md-10">
+
+                        <table class="table table-striped" ng-reflect-rows-on-page="10" ng-reflect-input-data="[object Object],[object Object]">
+                          <thead class="thead-default">
+                            <tr>
+
+                              <th>Candidate</th>
+                              <th>Description</th>
+                              <th>Account</th>
+                              <th>Hours</th>
+                              <th>HourlyRate</th>
+                              <th>Amount</th>&nbsp;
+                     
+                              <!--<button type="button" (click)="addNewRow()"   disabled  class="btn btn-primary small1">Add Row</button>-->
+                            </tr>
+                          </thead>
+                        </table>
+                        <table>
+                          <tbody>
+                            <form class="form-inline" method="post" [formGroup]="invoiceForm" *ngIf="invoiceForm">
+                              <div formArrayName="products">
+                                <tr class="row">
+                                  <div class=" form-group" *ngFor="let itemrow of invoiceForm.controls.products.controls; let i=index  " [formGroupName]="i">&nbsp;
+                                    <td class="col-md-1 ">
+                                      <select class="size" id="candidatename" formControlName="EmpId" name="hf-Candidate" type="text" class="form-control" #t (change)="onChange(t.value)"
+                                        (input)="modelp.EmpId= $event.target.value">
+                                        <option *ngFor="let option of modelerlist | orderBy: order:ascending"
+                                          [value]="option.Id"> {{option.FirstName}} </option>
+                                  </select>
+                                      <!--<div *ngIf="products.controls.['candidatename'].hasError('required') && products.controls['candidatename'].touched" class="error">You must Account Number.</div>-->
+                                    </td>&nbsp;&nbsp;
+                                    <td class="col-md-1 ">
+                                      <input class="size1" id="Description" formControlName="description" placeholder="Description" type="text" (input)="modelp.Description = $event.target.value">
+                                      <!--<div *ngIf="invoiceForm.controls.products.controls['description'].hasError('required') && invoiceForm.controls.products.controls['description'].touched" class="error">You must Enter Description.</div>-->
+                                    </td>&nbsp;&nbsp;
+                                    <td class="col-md-1 text-muted">
+                                      <input class=" size1" id="Account" formControlName="account" pattern="^(0|[1-9][0-9]*)$" placeholder="Account No.." type="text"
+                                        (input)="modelp.Account = $event.target.value">
+                                      <!--<div *ngIf="invoiceForm['products'].hasError('required') && invoiceForm['products'].touched" class="error">You must enter Account Number.</div>-->
+                                    </td>
+
+                                    <td class="col-md-1">
+
+                                      <input class="size1" id="Hours" formControlName="hours" [readonly]="true" placeholder=" Hours " [(ngModel)]="totalweekhours"
+                                        (input)="itemrow.Hours= $event.target.value">
+                                      <!--[(ngModel)]="totalweekhours" -->
+                                      <!--<div *ngIf="invoiceForm.controls['hours'].hasError('required') && invoiceForm.controls['hours'].touched" class="error">You must enter Hours.</div>-->
+                                      <!--<div *ngIf="myForm_.controls['email'].hasError('pattern') && myForm_.controls['email'].touched" class="error">Email is invalid </div>-->
+                                    </td>&nbsp;&nbsp;
+                                    <!--getworkedhours-->
+                                    <!--pattern="^(0|[1-9][0-9]*)$"-->
+                                    <td class="col-md-1">
+
+                                      <input class="size1" id="HourlyRate" formControlName="hourlyrate" placeholder=" HourlyRate " type="text" [(ngModel)]="itemrow.HourlyRate"
+                                        (input)="modelp.HourlyRate = $event.target.value" (ngModelChange)="itemrow.Amount=itemrow.HourlyRate*hours">
+                                      <!--<div *ngIf="invoiceForm.controls['hourlyrate'].hasError('required') && invoiceForm.controls['hourlyrate'].touched" class="error">You must enter hourlyrate.</div>-->
+                                    </td>&nbsp;&nbsp;
+
+
+                                    <td class="col-md-1">
+                                      <input class="size1" id="Amount" formControlName="amount" placeholder=" " [readonly]="true" type="number" [(ngModel)]="itemrow.Amount"
+                                        (input)="modelp.Amount = $event.target.value">
+                                    </td>&nbsp;&nbsp;
+                                    <td class="col-md-1">
+                                      <button class="size1" *ngIf="invoiceForm.controls.products.controls.length>1  " (click)="deleteRow(i)" class="btn btn-danger btn-sm  small"><i class="fa fa-trash-o fa-lg mt-4"></i>  </button>
+                                    </td>
+                                  </div>
+                                </tr>
+                              </div>
+                            </form>
+                          </tbody>
+                        </table>
+                      </div>
+                      <br>
+                      <hr>
+                      <div class="col-md-11 text-right" (input)="model.Total = $event.target.value">Total : {{getTotal()}}
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-10 text-center">
+                          <button type="button" class="btn btn-md btn-primary" [ladda]='isLoading' [disabled]="!(myForm.valid && invoiceForm.valid)"
+                            (click)="postInvoice()">Save</button>
+                          <!--<button type="button" class="btn btn-md btn-primary" data-toggle="modal" (click)="largeModal.show()">  Preview</button>-->
+                          <button type="button" class="btn btn-md btn-secondary text-primary" routerLinkActive="active" [routerLink]="['/Invoice']">cancel</button>
+
+
+
+                        </div>
+                      </div>
+
+                    </tab>
+                    <!--<tab heading="OTHER INFO" class="tab-pane" [disabled]="Main1">
+
+                      </tab>-->
+
+                  </div>
+                </tabset>
+              </div>
+
+            </div>
+          </div>
+        </form><br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  *ngIf="type=='organization'">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">INVOICE PREVIEW</h5>
+        <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="card">
+        <div class="card-block">
+          <div class="row mb-2">
+
+            <div class="col-sm-4">
+              <h6 class="mb-1">From:</h6>
+              <!--this.modelo.firstname-->
+              <!--<div><strong>Organization Name:  {{modelo.FirstName}}</strong></div>-->
+              <div>Email: {{modelo.Email}} </div>
+              <!--<div>Phone:</div>-->
+
+            </div>
+
+            <div class="col-sm-4">
+              <h6 class="mb-1">To:</h6>
+              <div><strong>Employee Name:  {{modelp.CandidateName}}</strong></div>
+              <div>Email: {{modele.Email}} </div>
+            </div>
+
+            <div class="col-sm-4">
+              <h6 class="mb-1">Details:</h6>
+              <div>Invoice ID:{{model.InvoiceId}}</div>
+              <!--<div>Invoice Date:{{model.InvoiceDate| date:'dd-MM-yyyy'}}</div>-->
+              <!--<div>Invoice Due Date:{{model.InvoiceDueDate| date:'dd-MM-yyyy'}}</div>-->
+
+            </div>
+
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+
+                  <th>Candidate</th>
+                  <th>Description</th>
+                  <th>Account</th>
+                  <th>Hours</th>
+                  <th>HourlyRate</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{modelp.CandidateName}}</td>
+                  <td>{{modelp.Description}}</td>
+                  <td>{{modelp.Account}}</td>
+                  <td>{{modelp.Hours}}</td>
+                  <td>{{modelp.HourlyRate}}</td>
+                  <td>{{modelp.Hours*modelp.HourlyRate}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-lg-4 col-sm-5">
+
+            </div>
+
+            <div class="col-lg-4 offset-lg-4 col-sm-5 offset-sm-2">
+              <table class="table table-clear">
+                <tbody>
+
+                  <tr>
+                    <td class="left"><strong>Total:{{getTotal()}}   </strong></td>
+
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--<pre>{{invoiceForm.value | json}}</pre>-->

@@ -1,0 +1,71 @@
+<div class="animated fadeIn">
+    <div class="row justify-content-md-center">
+        <div class="col-md-8">
+            <div class="card cards ">
+                <div class="card-header card-head text-primary text-center">
+                    <h4>{{modelrem.FirstName}}</h4>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <img src="{{imagesrc}}" class="col-lg-9" alt="admin@bootsrap.com">
+                        </div>
+                        <div class="col-lg-6">
+                            <div>
+                                <h6><strong>Name:</strong></h6>
+                                <span>{{modelrem.FirstName}} {{modelrem.LastName}}</span>
+                            </div>
+                            <div>
+                                <h6><strong>Email:</strong></h6>
+                                <span>{{modelrem.Email}}</span>
+                            </div>
+                            <div>
+                                <h6><strong>Contact Number</strong></h6>
+                                <span>{{modelrem.ContactNumber}}</span>
+                            </div>
+                            <div>
+                                <h6><strong>Address</strong></h6>
+                                <span *ngIf="modelrem!=null">{{modelrem.Address}},{{modelrem.City}},{{modelrem.State}},{{modelrem.Zipcode}}</span>
+                            </div>
+                            <br/>
+                            <div>
+                                <button type="button" class="btn btn-md btn-primary" [routerLink]="['/employees']">Back</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--<div class="card-block" *ngIf="type=='employee'">
+                   <div class="row">
+                       <div class="col-lg-4">
+                          <img src="{{imagesrc}}" class="col-lg-12" alt="{{imagesrc1}}">
+                       </div>
+                       <div class="col-lg-8">
+                           <div>
+                              <h6><strong>Name:</strong></h6>
+                              <span>{{modelrem.FirstName}} {{modelrem.LastName}}</span>
+                           </div>
+                           <div>
+                              <h6><strong>Email:</strong></h6>
+                              <span>{{modelrem.Email}}</span>
+                           </div>
+                           <div>
+                              <h6><strong>Phone:</strong></h6>
+                              <span>{{modelrem.ContactNumber}}</span>
+                           </div>
+                           <div>
+                              <h6><strong>Address:</strong></h6>
+                              <span >{{modelrem.Address}},{{modelrem.City}},{{modelrem.State}},{{modelrem.Zipcode}}</span>
+                           </div>
+                           <br/>
+                           <div>
+                                <button type="button" class="btn btn-md btn-primary" [routerLink]="['/employees']">Back</button>
+                           </div>
+                       </div>
+                   </div>
+                   
+                </div>-->
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,305 @@
+<div class="row text-center">
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-10 cards">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-search"></i></span>
+          <input type="text" name='inputsearch' class="form-control col-sm-12" placeholder="Search " #listFilter (keyup)="listFilter.value.length">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <form class="form-horizontal " method="post" [formGroup]="myForm">
+        <div class="row mb-1" *ngIf="type=='organization'">
+
+          <div class="col-sm-5">
+            <my-date-picker name="Date" formControlName="from" placeholder="From Date" [options]="myDatePickerOptions" [(ngModel)]="from"
+              required></my-date-picker>
+
+            <div *ngIf="myForm.controls['from'].hasError('required') && myForm.controls['from'].touched" class="error"></div>
+          </div>
+          <div class="col-sm-5">
+            <my-date-picker name="Date" formControlName="to" placeholder="To Date" [options]="myDatePickerOptions1" [(ngModel)]="to"
+              required></my-date-picker>
+            <div *ngIf="myForm.controls['to'].hasError('required') && myForm.controls['to'].touched" class="error"></div>
+          </div>
+
+          <div class="col-sm-1">
+            <button type="button" class="btn btn-md btn-primary" [ladda]='isLoading' [disabled]="!myForm.valid" (click)="postdayviewsdata()"
+              (click)="isEdit">Go</button>
+          </div>
+        </div>
+
+        <div class="from-group row" *ngIf="type=='employee'">
+
+          <div class="col-md-10">
+            <div class="input-group">
+              <!--<select class="form-control form-control-sm1 col-md-4" id="select" name="select" [ngModel]="selectedObject||'0'" (ngModelChange)="updateSelectedValue($event)">-->
+              <select class="form-control form-control-sm1 col-md-4" id="select" name="select" #t (change)="onChange(t.value)">
+                  <option value="0"> This Week</option>
+                  <option value="1">Last Week</option>
+                  <option value="2" >This Month</option>
+                  <option value="3">  Previous Month</option>    
+                  <option value="4">  More </option>    
+                         
+                </select>
+            </div>
+          </div>
+          <br>
+
+        </div>
+
+      </form>
+    </div>
+
+
+    <!--More days -->
+    <div class="col-md-12" *ngIf="Edit">
+
+
+      <!--<form class="form-horizontal " method="post" [formGroup]="myForm">
+   <my-date-picker name="Date" formControlName="from" placeholder="From Date" [options]="myDatePickerOptions" [(ngModel)]="from"
+              required></my-date-picker>
+              <my-date-picker name="Date" formControlName="to" placeholder="To Date" [options]="myDatePickerOptions" [(ngModel)]="to"
+              required></my-date-picker>
+               <button type="button" class="btn btn-md btn-primary" [ladda]='isLoading' [disabled]="!myForm.valid" (click)="dayviewsdata()"
+             >Go</button>
+        
+   </form>-->
+      <form class="form-horizontal " method="post" [formGroup]="myForm">
+        <div class="row">
+          <div class="col-md-6"></div>
+          <div class="col-md-6">
+            <div class="row mb-1" *ngIf="type=='employee'">
+
+              <div class="col-sm-5">
+                <my-date-picker name="Date" formControlName="from" placeholder="From Date" [options]="myDatePickerOptions" [(ngModel)]="from"
+                  required></my-date-picker>
+
+                <div *ngIf="myForm.controls['from'].hasError('required') && myForm.controls['from'].touched" class="error"></div>
+              </div>
+              <div class="col-sm-5">
+                <my-date-picker name="Date" formControlName="to" placeholder="To Date" [options]="myDatePickerOptions1" [(ngModel)]="to"
+                  required></my-date-picker>
+                <div *ngIf="myForm.controls['to'].hasError('required') && myForm.controls['to'].touched" class="error"></div>
+              </div>
+
+              <div class="col-sm-1">
+                <button type="button" class="btn btn-md btn-primary" [ladda]='isLoading' [disabled]="!myForm.valid" (click)="dayviewsdata()"
+                  (click)="isEdit">Go</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!--</div></div></div></div>-->
+    </div>
+
+    <div class="col-md-12" *ngIf="!isEdit">
+      <form action="" class="form-horizontal " method="post">
+        <div class="form-group row">
+          <div class="col-md-12">
+            <div class="card cards">
+              <div class="card-header card-head text-center">
+                <h5> Week View Details</h5>
+              </div><br>
+              <table class="table table-striped" ng-reflect-input-data="[object Object],[object Object]">
+                <thead class="thead-default">
+                  <tr>
+                    <th>Date</th>
+                    <th *ngIf="type=='organization'">EmployeeName</th>
+                    <th>Client</th>
+                    <th>Project</th>
+                    <th>Task</th>
+                    <th>StartTime</th>
+                    <th>EndTime</th>
+                    <th>Duration</th>
+                    <th>Description</th>
+                    <th>Remarks</th>
+
+                  </tr>
+                </thead>
+                <br>
+                <tbody *ngIf="type=='organization'">
+                  <tr *ngFor="let dayview of modeldalist|filter:listFilter.value ">
+
+                    <td>{{dayview.CreatedOn | date:'dd-MM-yyyy'}} </td>
+                    <td *ngIf="type=='organization'">{{dayview.EmpName}} </td>
+                    <td>{{dayview.Client}} </td>
+                    <td>{{dayview.Project}} </td>
+                    <td>{{dayview.Task}} </td>
+                    <td>{{dayview.StartTime}} </td>
+                    <td>{{dayview.EndTime }} </td>
+                    <td>{{dayview.Hours}} </td>
+                    <a routerLinkActive="active" [routerLink]="['/timesheet/description',dayview.Id]">
+                      <td class="text-truncate">Click Here...</td>
+                    </a>
+                    <td>{{dayview.Remarks}} </td>
+
+                  </tr>
+                </tbody>
+
+
+                <!--<tbody *ngIf="type=='employee'">
+                  <tr *ngFor="let dayview of modeldalist3|searchfilter:listFilter.value ">
+
+                    <td>{{dayview.CreatedOn | date:'dd-MM-yyyy'}} </td>
+                    <td>{{dayview.Client}} </td>
+                    <td>{{dayview.Project}} </td>
+                    <td>{{dayview.Task}} </td>
+                    <td>{{dayview.StartTime}} </td>
+                    <td>{{dayview.EndTime}} </td>
+                    <td>{{dayview.Hours}} </td>
+                    <a routerLinkActive="active" [routerLink]="['/timesheet/description',dayview.Id]">
+                      <td class="medium text-truncate">Click Here...</td>
+                    </a>
+                    <td>{{dayview.Remarks}} </td>
+
+                  </tr>
+
+                </tbody>-->
+              </table>
+              <!--<div class="row">
+                <div class="col-md-7">
+                  <div class="col-sm-12 text-center" *ngIf="(((type=='organization') && !( modeldalist.length>0)))">
+                    <h6>No Records vf Found</h6>
+                  </div>
+                </div>
+                <div class="col-md-3" *ngIf="((type=='organization') && ( modeldalist.length>0))">Total  Workedsdf Hours: &nbsp; <strong>{{totalhours}}</strong>   </div>
+                <div class="col-md-1"></div>
+
+              </div>-->
+
+
+              <div class="row">
+                <!--<div class="col-md-7">-->
+                <div class="col-sm-12 text-center" *ngIf="(((type=='organization') && !( modeldalist.length>0)))">
+                  <h6>No Records Found</h6>
+                </div>
+                <div class="col-md-7"></div>
+                <div class="col-md-3" *ngIf="((type=='organization') && ( modeldalist.length>0))">Total Worked Hours: &nbsp; <strong>{{totalhours}}</strong> </div>
+                <div class="col-md-2"></div>
+                <!--</div>-->
+              </div>
+              <!--<div class="text-center" *ngIf="type=='employee'">Total Hours Worked:<strong>{{totalhours}}</strong> </div>-->
+
+              <!--<div class="row">
+                <div class="col-md-7"></div>
+                <div class="col-md-3" *ngIf="type=='employee'">Total Hours Worked:<strong>{{totalhours}}</strong> </div>
+                <div class="col-md-2"></div>
+
+              </div>-->
+
+            </div>
+          </div>
+          <!--<div class="form-group text-center"  >
+       <input type="text"   class="form-control col-sm-12"  placeholder="Search"  Total >   
+            </div>-->
+
+
+
+
+        </div>
+      </form>
+      <!--<div class="form-group row">
+        <div class="col-md-12 text-center">
+
+          <button type="submit" class="btn btn-md btn-primary">Previous</button>
+          (click)="postDayview()"
+          <button type="button" class="btn btn-md btn-primary"> Next </button>
+          routerLinkActive="active" [routerLink]="['/personal/dayview']"
+        </div>
+      </div>-->
+    </div>
+
+
+
+    <div class="col-md-12" *ngIf="isEdit">
+      <form action="" class="form-horizontal " method="post">
+        <div class="form-group row">
+          <div class="col-md-12">
+            <div class="card cards">
+              <div class="card-header card-head text-center">
+                <h5> Week View Details</h5>
+              </div><br>
+              <table class="table table-striped" ng-reflect-input-data="[object Object],[object Object]">
+                <thead class="thead-default">
+                  <tr>
+                    <th>Date</th>
+                    <th *ngIf="type=='organization'">Employee Name</th>
+                    <th>Client</th>
+                    <th>Project</th>
+                    <th>Task</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Duration</th>
+                    <th>Description</th>
+                    <th>Remarks</th>
+                  </tr>
+                </thead>
+                <br>
+                <tbody *ngIf="type=='employee'">
+                  <tr *ngFor="let dayview of modeldalist3|searchfilter:listFilter.value">
+                    <!--|filter:listFilter.value">-->
+                    <!---->
+                    <td>{{dayview.CreatedOn | date:'dd-MM-yyyy'}} </td>
+                    <td *ngIf="type=='organization'">{{dayview.EmpName}} </td>
+                    <td>{{dayview.Client}} </td>
+                    <td>{{dayview.Project}} </td>
+                    <td>{{dayview.Task}} </td>
+                    <td>{{dayview.StartTime}} </td>
+                    <td>{{dayview.EndTime}} </td>
+                    <td>{{dayview.Hours}} </td>
+                    <a routerLinkActive="active" [routerLink]="['/timesheet/timesheetview',dayview.Id]">
+                      <td class="medium text-truncate">Click here...</td>
+                    </a>
+                    <td>{{dayview.Remarks}} </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="type=='organization'">
+                  <tr *ngFor="let dayview of modeldalist|filter:listFilter.value ">
+
+                    <td>{{dayview.CreatedOn | date:'dd-MM-yyyy'}} </td>
+                    <td *ngIf="type=='organization'">{{dayview.EmpName}} </td>
+                    <td>{{dayview.Client}} </td>
+                    <td>{{dayview.Project}} </td>
+                    <td>{{dayview.Task}} </td>
+                    <td>{{dayview.StartTime}} </td>
+                    <td>{{dayview.EndTime }} </td>
+                    <td>{{dayview.Hours}} </td>
+                    <a routerLinkActive="active" [routerLink]="['/timesheet/description',dayview.Id]">
+                      <td class="text-truncate">Click Here...</td>
+                    </a>
+                    <td>{{dayview.Remarks}} </td>
+
+                  </tr>
+                </tbody>
+              </table>
+
+
+              <!--<div class="col-md-4" *ngIf="type=='employee'">Total Hours Worked:<strong>{{totalweekhours}}</strong> </div>-->
+              <div class="row">
+                <!--<div class="col-md-7">-->
+                <div class="col-sm-12 text-center" *ngIf="(((type=='employee')&&!( modeldalist3.length>0))||((type=='organization') && !( modeldalist.length>0)))">
+                  <h6>No Records Found</h6>
+                </div>
+                <div class="col-md-7"></div>
+                <div class="col-md-3" *ngIf="(((type=='employee') && ( modeldalist3.length>0))||((type=='organization') && ( modeldalist.length>0)))">Total Worked Hours:<strong>{{totalweekhours}}</strong> </div>
+                <div class="col-md-2"></div>
+                <!--</div>-->
+              </div>
+
+
+            </div>
+
+          </div>
+
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

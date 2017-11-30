@@ -1,0 +1,81 @@
+<div class="animated fadeIn">
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-9">
+
+      <div class="card cards">
+        <div class="card-header card-head text-center">
+          <h5 class="text-primary"> {{modelrem.FirstName}} </h5>
+        </div>
+        <div class="form-group row">
+          <div class="form-group row">
+            <label class="col-md-2 form-control-label" for="hf-Firstname"><strong>First Name</strong></label>
+            <div class="col-md-4">
+              <label for="hf-firstname">{{modelrem.FirstName}}</label>
+            </div>
+            <label class="col-md-2 form-control-label" for="hf-lastname"><strong>Last Name</strong></label>
+            <div class="col-md-4">
+              <label for="hf-lastname">{{modelrem.LastName}}</label>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 form-control-label" for="hf-email"><strong>Email</strong></label>
+            <div class="col-md-4">
+              <label for="hf-email">{{modelrem.Email}}</label>
+            </div>
+            <label class="col-md-2 form-control-label" for="hf-phone"><strong>Phone</strong></label>
+            <div class="col-md-4">
+              <label for="hf-phone">{{modelrem.ContactNumber}}</label>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 form-control-label" for="hf-gender"><strong>Gender</strong></label>
+            <div class="col-md-4">
+              <label for="hf-gender">{{modelrem.Gender}}</label>
+            </div>
+            <label class="col-md-2 form-control-label" for="hf-address"><strong>Address</strong></label>
+            <div class="col-md-4">
+              <label for="hf-address">{{modelrem.Address}}</label>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 form-control-label" for="hf-city"><strong>City</strong></label>
+            <div class="col-md-4">
+              <label for="hf-city">{{modelrem.City}}</label>
+            </div>
+
+            <label class="col-md-2 form-control-label" for="hf-state"><strong>State</strong></label>
+            <div class="col-md-4">
+              <label for="hf-state">{{modelrem.State}}</label>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <!--<label class="col-md-2 form-control-label" for="hf-profile"><strong>Profile Pic</strong></label>
+              <div class="col-md-4">
+                                <img [src]="croppedImage">
+                                <button type="button" *ngIf="type=='organization'" class="btn btn-secondary" data-toggle="modal" (click)="largeModal.show()">
+                                 Select a Image
+                                </button>
+                                <button type="button" *ngIf="type=='employee'" class="btn btn-secondary" data-toggle="modal" (click)="largeModal.show()">
+                                  Select a Image
+                                 </button>
+                            </div>-->
+            <label class="col-md-2 form-control-label" for="hf-zip"><strong>Zip Code</strong></label>
+            <div class="col-md-4">
+              <label for="hf-state">{{modelrem.Zipcode}}</label>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="card-footer p-2 text-center">
+          <button type="button" *ngIf="!isEdit" class="btn btn-md btn-primary" routerLinkActive="active" [routerLink]="['/employees']">Back</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

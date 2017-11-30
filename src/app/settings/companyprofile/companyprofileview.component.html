@@ -1,0 +1,39 @@
+<div class="animated fadeIn">
+    <div class="row justify-content-md-center">
+        <div class="col-md-8">
+            <div class="card cards">
+                <div class="card-header card-head text-primary">
+                    <h4>Company Profile</h4>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">&nbsp;&nbsp;
+                        <img src="{{imagesrc}}" class="col-lg-9" alt="../../assets/img/avatars/user-icon.jpg">
+                    </div>
+                    <div class="col-lg-6">
+                        <div>
+                            <h6><strong>Name:</strong></h6>
+                            <span>{{modelr.FirstName}} {{modelr.LastName}}</span>
+                        </div>
+                        <div>
+                            <h6><strong>Email:</strong></h6>
+                            <span>{{modelr.Email}}</span>
+                        </div>
+                        <div>
+                            <h6><strong>Contact Number</strong></h6>
+                            <span>{{modelr.ContactNumber}}</span>
+                        </div>
+                        <div>
+                            <h6><strong>Address</strong></h6>
+                            <span *ngIf="modelr!=null">{{modelr.Address}},{{modelr.City}},{{modelr.State}},{{modelr.Zipcode}}</span>
+                        </div>
+                        <br/>
+                        <div>
+                            <button type="button" class="btn btn-md btn-secondary" [routerLink]="['Edit']">Edit Profile</button>
+                        </div><br>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

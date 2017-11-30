@@ -1,0 +1,61 @@
+<div class="animated fadeIn">
+  <div class="row mb-1">
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-primary" routerLinkActive="active" [routerLink]="['/Invoice/InvoiceCreate']">Create</button>
+
+    </div>
+    <div class="row mb-1">
+      <div class="col-md-12 cards">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-search"></i></span>
+          <input type="text" name='inputsearch' class="form-control col-sm-12" placeholder="Search Invoiceid" #listFilter (keyup)="listFilter.value.length">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="col-md-12">
+      <!--<div class="card">-->
+
+      <form action="" class="form-horizontal " method="post">
+        <div class="form-group row">
+          <div class="col-md-12">
+
+            <div class="card cards text-center">
+              <div class="card-header card-head text-center">
+                <h5> Invoice Details</h5>
+              </div><br>
+              <div class="card-block">
+                <!--<table class="table">
+            <thead>-->
+                <table class="table table-striped" ng-reflect-input-data="[object Object],[object Object]">
+                  <thead class="thead-default">
+                    <tr>
+                      <th class="text-center">InvoiceId</th>
+                      <th class="text-center">OrgName</th>
+                      <th class="text-center">InvoiceDate</th>
+                      <th class="text-center">InvoiceDueDate</th>
+                    </tr>
+                  </thead>
+                  <br>
+                  <tbody>
+                    <tr *ngFor="let invoice of modelrlist|filter:listFilter.value">
+                      <td>{{invoice.InvoiceId}} </td>
+                      <td><a routerLinkActive="active" [routerLink]="['/Invoice/invoiceProduct',invoice.Id]">{{invoice.OrgName}} </a></td>
+                      <td>{{invoice.InvoiceDate | date:'dd-MM-yyyy'}} </td>
+                      <td>{{invoice.InvoiceDueDate | date:'dd-MM-yyyy'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="col-sm-12 text-center" *ngIf="!(modelrlist.length>0)">
+                  <h6>No Records Found</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!--</div>-->
+    </div>
+  </div>
+</div>

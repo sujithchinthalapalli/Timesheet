@@ -1,0 +1,47 @@
+<div class="animated fadeIn">
+  <div class="row " *ngIf="type=='organization'">
+    <div class="col-sm-12 col-md-3">
+      <div class="card cards card-inverse card-infodark card-click" routerLinkActive="active" [routerLink]="['/employees/employeeinactive']">
+
+        <div class="card-block">
+          <div class="h1 text-muted text-right mb-2">
+            <i class="fa fa-users"></i>
+          </div>
+          <div class="h4 mb-0">{{modelerlist.length}} </div>
+          <!--<div class="h4 mb-0" ></div>-->
+          <small class="text-muted text-uppercase font-weight-bold">InActive Employees</small>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+    <div class="col-sm-12 col-md-3">
+
+      <div class="card cards card-inverse card-dangerdark card-click" routerLinkActive="active" [routerLink]="['/employees/employeeactive']">
+        <div class="card-block">
+          <div class="h1 text-muted text-right mb-2">
+            <i class="fa fa-male"></i>
+          </div>
+          <div class="h4 mb-0">{{modelelist.length}}</div>
+          <small class="text-muted text-uppercase font-weight-bold">Active Employees</small>
+
+        </div>
+      </div>
+    </div>
+
+    <!--/.col-->
+    <div class="col-sm-12 col-md-3">
+
+      <div class="card cards card-inverse card-successdark card-click" routerLinkActive="active" [routerLink]="['/timesheet/dayview']">
+        <div class="card-block">
+          <div class="h1 text-muted text-right mb-2">
+            <i class="fa fa-envelope"></i>
+          </div>
+          <div class="h4 mb-0">{{modeldalist1.length}}</div>
+          <small class="text-muted text-uppercase font-weight-bold">Dayview Status</small>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

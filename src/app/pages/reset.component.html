@@ -1,0 +1,39 @@
+<div class="app flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="text-center">
+                    <img class="col-md-10" src="{{imagesrc}}" alt=""><br><br>
+                </div>
+                <form class="form-horizontal" [formGroup]="resetForm">
+                    <div class="card-group mb-0">
+
+                        <div class="card cards">
+                            <h3 class="card-header card-head text-center">
+                                Reset Password
+                            </h3>
+                            <h6 class="alert alert-danger" *ngIf="error">{{error}}</h6>
+                            <h6 class="alert alert-warning" *ngIf="success">{{success}}</h6>
+                            <div class="card-block">
+                                <div class="input-group mb-1">
+                                    <input type="password" formControlName="password" class="form-control" placeholder="New Password" [value]="model.Password"
+                                        (input)="model.Password = $event.target.value">
+                                </div>
+                                <div *ngIf="resetForm.controls['password'].hasError('required') && resetForm.controls['password'].touched" class="error">Enter new password</div>
+                                <div class="input-group mb-1">
+                                    <input type="password" formControlName="confirmpassword" class="form-control" placeholder="Confirm Password" (input)="model.confirmpassword = $event.target.value">
+                                </div>
+                                <div *ngIf="resetForm.controls['confirmpassword'].hasError('required') && resetForm.controls['confirmpassword'].touched"
+                                    class="error">Please enter correct password</div>
+                                <button type="submit" class="btn btn-block btn-primary" [disabled]="!resetForm.valid" (click)="reset()">Submit</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>

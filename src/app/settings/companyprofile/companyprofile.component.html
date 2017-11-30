@@ -1,0 +1,152 @@
+<div class="animated fadeIn">
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-9">
+      <form class="form-horizontal" [formGroup]="myForm">
+        <div class="card cards">
+          <div class="card-header card-head text-center">
+            <h5 class="text-primary">Welcome {{modelr.FirstName}} {{modelr.LastName}} </h5>
+          </div>
+          <div class="card-block">
+
+            <div class="form-group row">
+              <label class="col-md-2 form-control-label" for="hf-Firstname"><strong>First Name</strong></label>
+              <div class="col-md-4">
+                <input type="text" id="hf-Firstname" [readonly]="true" name="hf-Firstname" class="form-control" [value]="modelr.FirstName"
+                  (input)="modelr.FirstName=$event.target.value">
+              </div>
+              <label class="col-md-2 form-control-label" for="hf-lastname"><strong>Last Name</strong></label>
+              <div class="col-md-4">
+                <input type="text" id="hf-email" [readonly]="true" name="hf-lastname" class="form-control" placeholder="Enter Last Name"
+                  [value]="modelr.LastName" (input)="modelr.LastName=$event.target.value">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 form-control-label" for="hf-email"><strong>Email*</strong></label>
+              <div class="col-md-4">
+                <input type="email" id="hf-email" [readonly]="true" name="hf-email" class="form-control" placeholder="Enter Email Address"
+                  [value]="modelr.Email" (input)="modelr.Email = $event.target.value">
+              </div>
+              <label class="col-md-2 form-control-label" for="hf-phone"><strong>Phone*</strong></label>
+              <div class="col-md-4">
+                <input type="text" formControlName="phone" [textMask]="{mask: phoneMask}" id="hf-state" name="phone" class="form-control"
+                  placeholder="Enter Phone No" [value]="modelr.ContactNumber" (input)="modelr.ContactNumber = $event.target.value">
+                <div *ngIf="!(myForm.value.phone)">
+                  <div *ngIf="myForm.controls['phone'].hasError('required') && myForm.controls['phone'].touched" class="error">You must enter phone no</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 form-control-label" for="hf-gender"><strong>Gender</strong></label>
+              <div class="col-md-4">
+                <span>
+                                  <input type="radio"  id="hf-gender" name="gender" formControlName="gender" value="Male" [checked]="modelr.Gender=='Male'"> Male
+                                </span>
+                <span>
+                                  <input  type="radio"  id="hf-gender" name="gender" formControlName="gender" value="Female" [checked]="modelr.Gender=='Female'"> Female
+                                </span>
+              </div>
+              <label class="col-md-2 form-control-label" for="hf-address"><strong>Address*</strong></label>
+              <div class="col-md-4">
+                <input type="text" formControlName="address" id="hf-address" name="address" class="form-control" placeholder="Enter Address"
+                  [value]="modelr.Address" (input)="modelr.Address = $event.target.value">
+                <div *ngIf="!(myForm.value.address)">
+                  <div *ngIf="myForm.controls['address'].hasError('required') && myForm.controls['address'].touched" class="error">Enter Your Address</div>
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 form-control-label" for="hf-city"><strong>City*</strong></label>
+              <div class="col-md-4">
+                <input type="text" [(ngModel)]="City" (setAddress)="getCity($event)" formControlName="city" id="hf-city" name="city" class="form-control"
+                  placeholder="Enter Your City" [value]="modelr.City" (input)="modelr.City = $event.target.value" ng2-google-place-autocomplete/>
+                <div *ngIf="!(myForm.value.city)">
+                  <div *ngIf="myForm.controls['city'].hasError('required') && myForm.controls['city'].touched" class="error">You must enter city.</div>
+                </div>
+              </div>
+              <label class="col-md-2 form-control-label" for="hf-state"><strong>State*</strong></label>
+              <div class="col-md-4">
+                <input type="text" formControlName="state" id="hf-state" name="state" class="form-control" placeholder="State Name" [value]="modelr.State"
+                  (input)="modelr.State = $event.target.value">
+                <div *ngIf="!(myForm.value.state)">
+                  <div *ngIf="myForm.controls['state'].hasError('required') && myForm.controls['state'].touched " class="error">You must include state.</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 form-control-label" for="hf-profile"><strong>Profile Pic</strong></label>
+              <div class="col-md-4">
+                <img [src]="croppedImage">
+                <button type="button" class="btn btn-secondary" data-toggle="modal" (click)="largeModal.show()">
+                                 Select a Image
+                                </button>
+              </div>
+              <label class="col-md-2 form-control-label" for="hf-zip"><strong>Zip Code*</strong></label>
+              <div class="col-md-4">
+                <input type="text" formControlName="zipcode" id="hf-zipCode" [textMask]="{mask: zipMask}" name="zipcode" class="form-control"
+                  placeholder="Postal Code" [value]="modelr.Zipcode" (input)="modelr.Zipcode = $event.target.value">
+                <div *ngIf="!(myForm.value.zipcode)">
+                  <div *ngIf="myForm.controls['zipcode'].hasError('required') && myForm.controls['zipcode'].touched " class="error">You must include a Zipcode.</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer text-center">
+              <button type="submit" class="btn btn-md btn-primary" [ladda]='isLoading' [disabled]="!myForm.valid" (click)="update();iseditFalse()">Save</button>
+              <button type="button" class="btn btn-md btn-primary" routerLinkActive="active" [routerLink]="['/settings/companyprofile']">Cancel</button>
+            </div>
+
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Upload the Image</h4>
+        <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group ">
+          <label class="col-md-12 text-center" for="hf-Upload"><strong>Upload Your Photo</strong></label>
+          <div class="col-sm-12">
+            <div class="row ">
+              <div class="col-sm-12 text-center">
+                <div class="fileUpload btn btn-primary ">
+                  <input type="file" id="btnUpload" value="Upload" (change)="fileChangeListener($event)" class="upload" accept="image/*">
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="fromGroup row">
+          <div class="col-sm-6">
+            <img-cropper #cropper [image]="data" [settings]="cropperSettings" (onCrop)="cropped($event)"></img-cropper>
+          </div>
+          <div class="col-sm-1">
+          </div>
+          <div class="col-sm-5">
+            <img [src]="data.image" [width]="croppedWidth" [height]="croppedHeight">
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="largeModal.hide();fileChange(data)">Save</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
